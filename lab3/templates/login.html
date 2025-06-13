@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+<!-- Наследуем базовый шаблон 'base.html', чтобы сохранить общую структуру сайта -->
+
+{% block content %}
+<!-- Начинаем блок content, который будет вставлен в базовый шаблон -->
+<div class="container">
+    <!-- Основной контейнер для содержимого страницы -->
+    <h2>Вход</h2>
+    <!-- Заголовок страницы -->
+    
+    <!-- Форма для входа -->
+    <form method="post">
+        <!-- Указываем метод POST для отправки данных -->
+        <input type="hidden" name="next" value="{{ next }}">
+        <!-- Скрытое поле для перенаправления после успешного входа -->
+        
+        <!-- Поле для ввода имени пользователя -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Имя пользователя</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+            <!-- Обязательное поле для ввода username -->
+        </div>
+        
+        <!-- Поле для ввода пароля -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <!-- Обязательное поле для ввода пароля (тип password скрывает ввод) -->
+        </div>
+        
+        <!-- Чекбокс "Запомнить меня" -->
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+            <label class="form-check-label" for="remember">Запомнить меня</label>
+            <!-- Позволяет пользователю оставаться в системе после закрытия браузера -->
+        </div>
+        
+        <!-- Кнопка для отправки формы -->
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+    
+    <!-- Блок для отображения flash-сообщений -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        <!-- Получаем все flash-сообщения с их категориями -->
+        {% if messages %}
+            <!-- Если есть сообщения -->
+            {% for category, message in messages %}
+                <!-- Перебираем все сообщения -->
+                <div class="alert alert-{{ category }} mt-3">{{ message }}</div>
+                <!-- Выводим сообщение с соответствующим классом стиля (например, alert-success, alert-danger) -->
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}
+<!-- Конец блока content -->

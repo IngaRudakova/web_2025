@@ -1,0 +1,25 @@
+{% extends 'base.html' %}  <!-- Наследуем базовый шаблон -->
+
+{% block content %}  <!-- Определяем блок для контента -->
+  <div class="container">
+    <h1>Форма ввода номера телефона</h1>
+    <form method="POST" action="{{ url_for('phone_validation') }}">  <!-- Создаем форму для отправки данных методом POST -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Номер телефона</label>
+        <input type="text" class="form-control {% if error %}is-invalid{% endif %}" id="phone" name="phone" value="{{ phone }}">  <!-- Поле для ввода номера телефона -->
+        {% if error %}  <!-- Если есть ошибка -->
+          <div class="invalid-feedback">
+            {{ error }}  <!-- Выводим сообщение об ошибке -->
+          </div>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-primary">Проверить</button>  <!-- Кнопка для отправки формы -->
+    </form>
+    {% if formatted_phone %}  <!-- Если номер был успешно отформатирован -->
+      <div class="mt-3">
+        <h2>Отформатированный номер:</h2>
+        <p>{{ formatted_phone }}</p>  <!-- Выводим отформатированный номер -->
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

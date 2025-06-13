@@ -1,0 +1,80 @@
+<!-- Главная страница приложения.
+     - Отображает список пользователей с кнопками для просмотра, редактирования и удаления.
+     - Доступ к действиям зависит от роли пользователя. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Список пользователей</h1>
+
+    <!-- Обработка flash-сообщений -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-3">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <table class="table">
+        {% include 'headers.html' %}
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</td>
+                <td>{{ user.role.name if user.role else 'Нет роли' }}</td>
+                <td>
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.role.name == 'Администратор' %}
+                            <a href="{{ url_for('view_user', user_id=user.id) }}" class="btn btn-blue btn-sm">Просмотр</a>
+                            <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-yellow btn-sm">Редактировать</a>
+                            <button class="btn btn-red btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user-id="{{ user.id }}" data-user-name="{{ user.last_name }} {{ user.first_name }}">Удалить</button>
+                        {% elif user.id == current_user.id %}
+                            <a href="{{ url_for('view_profile') }}" class="btn btn-info btn-sm">Просмотр</a>
+                            <a href="{{ url_for('edit_profile') }}" class="btn btn-warning btn-sm">Редактировать</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('create_user') }}" class="btn btn-primary">Создать пользователя</a>
+    {% endif %}
+</div>
+
+<!-- Модальное окно для подтверждения удаления -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                Вы уверены, что хотите удалить пользователя <span id="userName"></span>?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                    <button type="submit" class="btn btn-danger">Да</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const userId = button.getAttribute('data-user-id');
+        const userName = button.getAttribute('data-user-name');
+        const form = document.getElementById('deleteForm');
+        form.action = `/user/${userId}/delete`;
+        document.getElementById('userName').textContent = userName;
+    });
+</script>
+{% endblock %}

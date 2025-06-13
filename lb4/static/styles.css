@@ -1,0 +1,26 @@
+body {
+    font-size: 1.25rem;
+}
+
+.avatar {
+    max-width: 100%;
+}
+
+p {
+    text-align: justify;
+    font-size: medium;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+    padding: 1rem;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+}

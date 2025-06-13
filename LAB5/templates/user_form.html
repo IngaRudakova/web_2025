@@ -1,0 +1,12 @@
+<!-- Форма для создания и редактирования пользователей.
+     - Использует шаблон form_fields.html для отображения полей формы. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ 'Создание пользователя' if not form.username.data else 'Редактирование пользователя' }}</h1>
+<form method="post">
+    {{ form.hidden_tag() }}
+    {% include 'form_fields.html' %}
+    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+</form>
+{% endblock %}

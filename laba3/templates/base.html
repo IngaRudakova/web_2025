@@ -1,0 +1,117 @@
+<!doctype html>
+<!-- Объявление типа документа - HTML5 -->
+<html lang="ru">
+<!-- Корневой элемент с указанием языка страницы (русский) -->
+  
+  <head>
+    <!-- Секция метаданных и ресурсов страницы -->
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- Кодировка документа (UTF-8 для поддержки кириллицы) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Viewport для корректного отображения на мобильных устройствах -->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Подключение Bootstrap 5 CSS через CDN -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Подключение пользовательских стилей из статической папки -->
+
+    <title>
+        {% if title %}
+          {{ title }}
+        {% else %}
+          Лабораторная работа №1
+        {% endif %}
+    </title>
+    <!-- Динамический заголовок страницы с fallback на "Лабораторная работа №1" -->
+  </head>
+
+  <body>
+    <!-- Основное содержимое страницы -->
+    <header>
+      <!-- Шапка сайта -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- Навигационная панель:
+             - navbar: базовый класс навигации
+             - navbar-expand-lg: раскрывается на экранах large (≥992px)
+             - navbar-dark: светлый текст на темном фоне
+             - bg-dark: темный фон -->
+        
+        <div class="container">
+          <!-- Контейнер для центрирования содержимого -->
+          
+          <a class="navbar-brand" href="{{ url_for('index') }}">Лабораторная работа № 1</a>
+          <!-- Логотип/название сайта с ссылкой на главную страницу -->
+
+          <!-- Кнопка для мобильного меню -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- Атрибуты:
+                 - data-bs-toggle="collapse": активирует сворачиваемый контент
+                 - data-bs-target: указывает на элемент для управления
+                 - aria-*: атрибуты доступности для скринридеров -->
+            <span class="navbar-toggler-icon"></span>
+            <!-- Иконка "гамбургер" -->
+          </button>
+
+          <!-- Содержимое навигации -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Контейнер сворачиваемого содержимого -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <!-- Список навигационных ссылок:
+                   - navbar-nav: контейнер пунктов меню
+                   - ms-auto: выравнивание по правому краю (margin-start)
+                   - mb-*: отступ снизу -->
+              
+                   <!-- Функция Flask для динамического создания URL-адресов вместо жёсткого прописывания путей. -->
+            <!-- Автоматическая адаптация при изменении маршрутов / Поддержка динамических параметров -->
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Задание</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{{ url_for('posts') }}">Посты</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">Об авторе</a>
+              </li>
+              <!-- Пункты меню с ссылками на разные страницы -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="my-3">
+      <!-- Основное содержимое страницы с вертикальными отступами (margin-y) -->
+      <div class="container">
+          <!-- Контейнер для центрирования содержимого -->
+          {% block content %}
+              <h1>Содержимое по умолчанию</h1>
+              <!-- Блок для переопределения в дочерних шаблонах -->
+          {% endblock %}
+      </div>
+    </main>
+
+    <!-- Подключение JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Bootstrap 5 JS Bundle (включает Popper) -->
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+    <!-- Пользовательский JS с атрибутом defer (отложенная загрузка) -->
+
+    <footer class="footer mt-auto py-3 bg-dark">
+      <!-- Подвал сайта:
+           - footer: класс подвала
+           - mt-auto: автоматический отступ сверху
+           - py-3: вертикальные отступы (padding-y)
+           - bg-dark: темный фон -->
+      <div class="container">
+          <div class="text-center">
+              <span class="text-muted">Рудакова Инга, группа 231-3211</span>
+              <!-- Текст подвала с приглушенным цветом (text-muted) -->
+          </div>
+      </div>
+    </footer>
+
+  </body>
+</html>

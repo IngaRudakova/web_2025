@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-3 text-center text-uppercase font-weight-bold">Отзывы о курсе "{{ course.name }}"</h2>
+
+    <form method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-10">
+                <select class="form-select" name="sort">
+                    <option value="new" {% if sort_order == 'new' %}selected{% endif %}>По новизне</option>
+                    <option value="positive" {% if sort_order == 'positive' %}selected{% endif %}>Сначала положительные</option>
+                    <option value="negative" {% if sort_order == 'negative' %}selected{% endif %}>Сначала отрицательные</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark w-100">Применить</button>
+            </div>
+        </div>
+    </form>
+
+    {% for review in reviews %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ review.user.full_name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</h6>
+                <p class="card-text">Оценка: {{ review.rating }} / 5</p>
+                <p class="card-text">{{ review.text }}</p>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">Отзывов пока нет.</p>
+    {% endfor %}
+
+    <div class="mt-4">
+        {{ pagination.links }}
+    </div>
+
+    {% if current_user.is_authenticated %}
+        <section class="add-review mt-5">
+            <h3 class="mb-3 text-center">Оставить отзыв</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="rating">Оценка</label>
+                    <select class="form-select" id="rating" name="rating">
+                        <option value="5">Отлично</option>
+                        <option value="4">Хорошо</option>
+                        <option value="3">Удовлетворительно</option>
+                        <option value="2">Неудовлетворительно</option>
+                        <option value="1">Плохо</option>
+                        <option value="0">Ужасно</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="text">Текст отзыва</label>
+                    <textarea class="form-control" id="text" name="text" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark">Отправить</button>
+            </form>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+<!-- Базовый шаблон для всех страниц.
+     - Содержит шапку с навигацией, основной блок контента и футер.
+     - Навигация зависит от роли пользователя. -->
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{% block title %}Лабораторная работа{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+        <nav class="navbar navbar-expand-lg text-white navbar-dark bg-secondary">
+            <div class="container">
+              <a class="navbar-brand" href="{{ url_for('index') }}">Пользователи</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                  {% if current_user.is_authenticated %}
+                    {% if current_user.role.name == 'Администратор' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('visit_logs.index') }}">Журнал посещений</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('manage_roles') }}">Роли</a>
+                        </li>
+                    {% elif current_user.role.name == 'Пользователь' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('user_visit_logs') }}">Мой журнал посещений</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('change_password') }}">Изменить пароль</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('logout') }}">Выйти</a>
+                    </li>
+                  {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('login') }}">Войти</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main class="my-3">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <footer class="bg-secondary text-white text-center py-3">
+        <span>Rudakova Inga Dmitrievna, 231-3211</span>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

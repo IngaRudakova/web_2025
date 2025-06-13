@@ -1,0 +1,48 @@
+<!-- Главная страница журнала посещений.
+     - Отображает записи журнала с пагинацией.
+     - Содержит кнопки для отчетов по страницам, пользователям и очистки журнала. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Журнал посещений</h1>
+{% if current_user.is_authenticated and current_user.role.name == 'Администратор' %}
+<div class="d-flex mb-3">
+    <a href="{{ url_for('visit_logs.by_pages') }}" class="btn btn-blue me-2">Отчёт по страницам</a>
+    <a href="{{ url_for('visit_logs.by_users') }}" class="btn btn-blue me-2">Отчёт по пользователям</a>
+    <form method="post" action="{{ url_for('visit_logs.clear_logs') }}">
+        <button type="submit" class="btn btn-red" onclick="return confirm('Вы уверены, что хотите очистить журнал посещений?')">Очистить журнал</button>
+    </form>
+</div>
+{% endif %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Пользователь</th>
+            <th>Страница</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs.items %}
+        <tr>
+            <td>{{ loop.index + logs.page * logs.per_page - logs.per_page }}</td>
+            <td>{{ log.user.full_name if log.user else 'Неаутентифицированный пользователь' }}</td>
+            <td>{{ log.path }}</td>
+            <td>{{ log.created_at.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="pagination">
+    {% if logs.has_prev %}
+    <a href="{{ url_for('visit_logs.index', page=logs.prev_num) }}" class="btn btn-white">&laquo; Назад</a>
+    {% endif %}
+    {% for page_num in range(1, logs.pages + 1) %}
+    <a href="{{ url_for('visit_logs.index', page=page_num) }}" class="btn btn-white {% if logs.page == page_num %}active{% endif %}">{{ page_num }}</a>
+    {% endfor %}
+    {% if logs.has_next %}
+    <a href="{{ url_for('visit_logs.index', page=logs.next_num) }}" class="btn btn-white">Вперёд &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}

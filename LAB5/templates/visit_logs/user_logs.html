@@ -1,0 +1,25 @@
+<!-- Страница журнала посещений для текущего пользователя.
+     - Отображает записи журнала, относящиеся только к текущему пользователю. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Ваш журнал посещений</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Страница</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ log.path }}</td>
+            <td>{{ log.created_at.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

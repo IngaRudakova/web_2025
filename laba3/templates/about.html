@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{# Наследуемся от базового шаблона 'base.html' #}
+
+{% block content %}
+{# Начинаем блок content, который будет вставлен в базовый шаблон #}
+
+<h1 class="mt-5 text-center">Об авторе</h1>
+{# Заголовок страницы с отступом сверху (mt-5) и выравниванием по центру #}
+
+<div class="row">
+    {# Создаем строку сетки Bootstrap #}
+    
+    <div class="col-md-4 mb-3">
+        {# Колонка занимает 4 из 12 колонок на средних экранах и выше, margin-bottom 3 единицы #}
+        <img class="avatar" src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Author">
+        {# Изображение автора, загружаемое из статической папки, с классом avatar и альтернативным текстом #}
+    </div>
+    
+    <div class="col-md-8 text-justify d-flex align-items-center">
+        {# Колонка занимает 8 из 12 колонок, текст выровнен по ширине, flex-контейнер с вертикальным выравниванием по центру #}
+        <p>
+            {# Текст-заполнитель об авторе (lorem ipsum) #}
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea nemo illo natus 
+            inventore. Distinctio eius consectetur similique molestias. Molestiae esse maiores 
+            enim velit quisquam, omnis libero quam ducimus ea tempore.
+
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem, ab? 
+            Earum cum dolorum ipsum voluptatum quis voluptatibus ea veritatis assumenda aliquid 
+            dolores quas, distinctio laboriosam, omnis ratione est tempora nisi.
+        </p>
+    </div>
+</div>
+{% endblock %}
+{# Конец блока content #}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="my-5">Последние посты</h1>
+    <!-- Заголовок страницы с вертикальными отступами (my-5 = margin-top и margin-bottom: 3rem) -->
+    <div class="row mb-3">
+        <!-- Создает строку сетки Bootstrap с отступом снизу (mb-3 = margin-bottom: 1rem) -->
+        {% for post in posts %}
+        <!-- Цикл по всем постам -->
+            <div class="col-md-6 d-flex">
+                <!-- Колонка занимает 6 из 12 колонок на средних экранах и выше (md) -->
+                <!-- d-flex делает элемент flex-контейнером для правильного растягивания карточки -->
+           
+                <div class="card mb-4">
+                    <!-- Карточка Bootstrap с отступом снизу (mb-4 = margin-bottom: 1.5rem) -->
+            
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/' + post.image_id) }}" alt="Card image cap">
+                     <!-- Изображение карточки (card-img-top - растягивает изображение по ширине карточки) -->
+                    <div class="card-body">
+                        <!-- Тело карточки -->
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <!-- Заголовок карточки -->
+                        <p class="card-text">
+                            {{ post.text | truncate(100) }}
+                            <!-- Текст поста, обрезанный до 100 символов (фильтр truncate) -->
+                        </p>
+                        <a href="{{ url_for('post', index=loop.index0) }}" class="btn btn-primary">Читать дальше &rarr;</a>
+                        <!-- Кнопка-ссылка с иконкой стрелки вправо (&rarr;) -->
+                    </div>
+                    <div class="card-footer text-muted">
+                        Опубликовано {{ post.date.strftime('%d.%m.%Y') }}.
+                        <!-- Форматирование даты в день.месяц.год -->
+                        Автор: {{ post.author }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

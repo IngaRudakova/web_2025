@@ -1,0 +1,12 @@
+{% extends 'base.html' %}  <!-- Наследуем базовый шаблон -->
+
+{% block content %}  <!-- Определяем блок для контента -->
+  <div class="container">
+    <h1>Cookies</h1>
+    <ul>
+      {% for key, value in cookies.items() %}  <!-- Перебираем все cookies -->
+        <li>{{ key }}: {{ value }}</li>  <!-- Выводим каждую cookie -->
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

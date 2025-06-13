@@ -1,0 +1,99 @@
+/* Основные стили для приложения.
+   - Стили для кнопок, таблиц, пагинации и других элементов интерфейса. */
+
+body {
+    font-size: 1.25rem;
+}
+
+.avatar {
+    max-width: 100%;
+}
+
+p {
+    text-align: justify;
+    font-size: medium;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+    padding: 1rem;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.pagination a, .pagination span {
+    margin: 0 5px;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.pagination a:hover {
+    background-color: #e9ecef;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.btn-white {
+    background-color: white;
+    color: black;
+    border: 1px solid #dee2e6;
+}
+
+.btn-white:hover {
+    background-color: #f8f9fa;
+    color: black;
+    border-color: #ced4da;
+}
+
+.btn-red {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+.btn-red:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-blue {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.btn-blue:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-yellow {
+    background-color: #ffc107;
+    color: black;
+    border: 1px solid #ffc107;
+}
+
+.btn-yellow:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}

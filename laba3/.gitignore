@@ -1,0 +1,69 @@
+# Virtual environment (venv, .venv, env)
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Flask specific
+instance/
+.webassets-cache
+
+# Environments
+.env
+.venv
+env/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependency directories (should not be committed)
+lib/
+lib64/
+site-packages/
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+### Faker ###
+# Кэш генерации данных
+Faker
+pyvenv.cfg
+activate
+activate.csh
+activate.fish
+flsk 
+pip
+pip3
+pip3.9
+python
+python3
+python3.9
+flask
+Activate.ps1
+s

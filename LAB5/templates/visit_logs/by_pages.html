@@ -1,0 +1,28 @@
+<!-- Страница отчета по страницам.
+     - Отображает статистику посещений страниц.
+     - Содержит кнопку для экспорта данных в CSV и возврата назад. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Отчёт по страницам</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Страница</th>
+            <th>Количество посещений</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stat in stats %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ stat[0] }}</td>
+            <td>{{ stat[1] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('visit_logs.index') }}" class="btn btn-secondary">Назад</a>
+<a href="{{ url_for('visit_logs.export_pages') }}" class="btn btn-blue">Экспорт в CSV</a>
+{% endblock %}

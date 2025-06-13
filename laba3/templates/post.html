@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+<!-- Наследование от базового шаблона base.html -->
+
+{% block content %}
+<!-- Начало блока content, который будет вставлен в базовый шаблон -->
+
+<div class="container">
+    <!-- Основной контейнер Bootstrap для центрирования содержимого -->
+    <div class="row">
+        <!-- Строка сетки Bootstrap -->
+        
+        <div class="col-md-2"></div>
+        <!-- Пустая колонка (2 из 12) для создания отступов по бокам -->
+        
+        <div class="col-md-8">
+            <!-- Основная колонка с контентом (8 из 12) -->
+            
+            <h1 class="my-5">{{ post['title'] }}</h1>
+            <!-- Заголовок поста с большими вертикальными отступами (my-5) -->
+            
+            <h5 class="my-5">{{ post['author'] }}, {{ post['date'] }}</h5>
+            <!-- Информация об авторе и дате с такими же отступами -->
+            
+            <!-- Функция Flask для динамического создания URL-адресов вместо жёсткого прописывания путей. -->
+            <!-- Автоматическая адаптация при изменении маршрутов / Поддержка динамических параметров -->
+            <img src="{{ url_for('static', filename='images/' + post['image_id']) }}" 
+            
+                 class="img-fluid" 
+                 style="margin-bottom: 10px;" 
+                 alt="">
+            <!-- Изображение поста:
+                 - img-fluid: делает изображение адаптивным
+                 - margin-bottom: отступ снизу 10px
+                 - Загружается из статической папки -->
+
+            <p>{{ post['text'] }}</p>
+            <!-- Текст поста -->
+
+            <!-- Форма для комментариев -->
+            <form action="" style="border: 1px solid #afa8a8bf; padding: 10px;">
+                <!-- Стилизованная форма с серой рамкой и внутренними отступами -->
+                <div class="form-group">
+                    <!-- Группа элементов формы -->
+                    <div style="background-color: rgb(199, 192, 192); margin-bottom: 10px;">
+                        <!-- Серая подложка для заголовка -->
+                        <label for="comment">Оставьте комментарий</label>
+                    </div>
+                    
+                    <textarea class="form-control" id="comment" rows="5" 
+                              style="margin-bottom: 10px;"></textarea>
+                    <!-- Текстовое поле для комментария -->
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+                <!-- Кнопка отправки стилизованная Bootstrap -->
+            </form>
+
+            <!-- Блок с комментариями -->
+            <div class="comments" style="margin-top: 10px;">
+                {% for comment in post['comments'] %}
+                <!-- Цикл по комментариям -->
+                    <div class="comment">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Аватар пользователя -->
+                                <div class="col-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
+                                         alt="avatar" 
+                                         style="width: 80%;">
+                                    <!-- Стандартная иконка пользователя -->
+                                </div>
+                               
+                                <!-- Текст комментария -->
+                                <div class="col-10">
+                                    <h4>{{ comment['author'] }}</h4>
+                                    <p>{{ comment['text'] }}</p>    
+                                    
+                                    <!-- Блок с ответами на комментарий -->
+                                    {% if comment['replies'] %}
+                                        <div class="replies">
+                                            {% for reply in comment['replies'] %}
+                                                <div class="reply">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <!-- Аватар для ответа -->
+                                                            <div class="col-2">
+                                                                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
+                                                                     alt="avatar"
+                                                                     style="width: 80%;">
+                                                            </div>
+                                                            <!-- Текст ответа -->
+                                                            <div class="col-10">
+                                                                <h4>{{ reply['author'] }}</h4>
+                                                                <p>{{ reply['text'] }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-2"></div>
+        <!-- Пустая колонка (2 из 12) для создания отступов по бокам -->
+    </div>
+</div>
+{% endblock %}
+<!-- Конец блока content -->
