@@ -1,0 +1,32 @@
+/*
+!lab1/
+!lab2/
+!lab3/
+!laba3/
+!lab4/
+!LAB5/
+!lb4/
+!lb6/
+!lab1/**
+!lab2/**
+!lab3/**
+!laba3/**
+!lab4/**
+!LAB5/**
+!lb4/**
+!lb6/**
+.*
+!.gitignore
+
+# Игнорировать папку виртуального окружения Python
+myenv/
+venv/
+.venv/
+
+# Игнорировать кэш Python
+__pycache__/
+*.py[cod]
+
+# Другие временные/системные файлы
+*.swp
+.DS_Store
